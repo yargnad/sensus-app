@@ -32,6 +32,11 @@ const SubmissionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '60d' }
     }
 });
 
