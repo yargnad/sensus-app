@@ -18,9 +18,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-const GEMINI_VISION_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`;
+const GEMINI_VISION_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
 async function getEmotionalVector(submission) {
 // ... existing code ...
@@ -60,9 +59,10 @@ async function getEmotionalVector(submission) {
         return summary.split(',').map(kw => kw.trim().toLowerCase());
 
     } catch (error) {
-        console.error('Error calling Gemini API:', error.response ? error.response.data : error.message);
-        // Return a generic vector on error to avoid breaking the matching logic
-        return ['error'];
+        const errorMessage = error.response ? error.response.data.error.message : error.message;
+        console.error('Error calling Gemini API:', errorMessage);
+        // Return a descriptive error vector to aid in debugging
+        return ['error', errorMessage];
     }
 }
 

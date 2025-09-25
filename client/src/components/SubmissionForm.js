@@ -16,8 +16,8 @@ const SubmissionForm = ({ onSubmit }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form onSubmit={handleSubmit} className="submission-form">
+            <div className="form-group">
                 <textarea
                     placeholder="Share a poem or a thought..."
                     value={text}
@@ -26,23 +26,31 @@ const SubmissionForm = ({ onSubmit }) => {
                         setFile(null);
                     }}
                     rows="4"
-                    cols="50"
                 ></textarea>
             </div>
-            <div>
-                <p>OR</p>
+            <div className="or-file-container">
+                <div className="form-divider">
+                    <p>OR</p>
+                </div>
+                <div className="form-group file-input-group">
+                    <label className="file-input-label">
+                        Choose File
+                        <input
+                            type="file"
+                            accept="image/*,audio/*"
+                            onChange={(e) => {
+                                setFile(e.target.files[0]);
+                                setText('');
+                            }}
+                            className="file-input-hidden"
+                        />
+                    </label>
+                    {file && <span className="file-name">{file.name}</span>}
+                </div>
             </div>
-            <div>
-                <input
-                    type="file"
-                    accept="image/*,audio/*"
-                    onChange={(e) => {
-                        setFile(e.target.files[0]);
-                        setText('');
-                    }}
-                />
+            <div className="form-group submit-button-group">
+                <button type="submit" className="submit-button">Submit</button>
             </div>
-            <button type="submit">Submit</button>
         </form>
     );
 };

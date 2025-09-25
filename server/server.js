@@ -16,6 +16,13 @@ app.use('/uploads', express.static('uploads'));
 // DB Config
 const db = 'mongodb://localhost:27017/sensus'; // Replace with your MongoDB connection string
 
+// Check for Gemini API Key
+if (process.env.GEMINI_API_KEY) {
+    console.log('Gemini API Key loaded successfully.');
+} else {
+    console.error('FATAL ERROR: GEMINI_API_KEY not found in .env file.');
+}
+
 // Connect to MongoDB
 mongoose
     .connect(db)

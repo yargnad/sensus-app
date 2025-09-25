@@ -5,7 +5,7 @@ import MatchedContent from './components/MatchedContent';
 import CooldownTimer from './components/CooldownTimer';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = `http://${window.location.hostname}:5000`;
 
 function App() {
     const [showForm, setShowForm] = useState(false);
