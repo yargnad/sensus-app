@@ -1,0 +1,12 @@
+# Node
+node_modules/
+npm-debug.log
+.DS_Store
+
+# React
+/client/node_modules
+/client/build
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
