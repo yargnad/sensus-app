@@ -71,15 +71,29 @@ function App() {
         setShowForm(false);
         setWaiting(true);
 
+        // Set cooldown immediately on the client side to prevent re-submission on refresh
+        const submissionTime = new Date();
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+        localStorage.setItem('sensus_last_submission', submissionTime.toISOString());
+        setCooldownTime(twentyFourHours);
+
         try {
+            const sessionToken = localStorage.getItem('sensus_session_token');
+            if (sessionToken) {
+                formData.append('sessionToken', sessionToken);
+            }
+
             const res = await fetch(`${API_URL}/api/submit`, { method: 'POST', body: formData });
             const data = await res.json();
-            const twentyFourHours = 24 * 60 * 60 * 1000;
-            const submissionTime = data.lastSubmissionTime || data.submissionTime;
-            const timePassed = Date.now() - new Date(submissionTime).getTime();
-            setCooldownTime(twentyFourHours - timePassed);
 
+            // If the server responds with a 429, it means we were already in a cooldown period.
+            // We should sync our timer with the server's more accurate time.
             if (res.status === 429) {
+                const serverSubmissionTime = data.lastSubmissionTime;
+                const timePassed = Date.now() - new Date(serverSubmissionTime).getTime();
+                setCooldownTime(twentyFourHours - timePassed);
+                localStorage.setItem('sensus_last_submission', serverSubmissionTime);
+                
                 setWaiting(false);
                 if (data.lastSubmissionId) {
                     fetch(`${API_URL}/api/check/${data.lastSubmissionId}`)
@@ -91,9 +105,12 @@ function App() {
                 return;
             }
 
+            // If submission is successful, store the new session token and submission ID
             localStorage.setItem('sensus_session_token', data.sessionToken);
-            localStorage.setItem('sensus_last_submission', data.submissionTime);
             localStorage.setItem('sensus_submission_id', data.submissionId);
+            // We already set the submission time, but we can sync with the server's official time
+            localStorage.setItem('sensus_last_submission', data.submissionTime);
+
 
             if (data.status === 'matched') {
                 setMatchedContent(data.matchData);

@@ -22,47 +22,61 @@ const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/
 const GEMINI_VISION_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
 async function getEmotionalVector(submission) {
-// ... existing code ...
-    try {
-        let requestBody;
-        let apiUrl;
+    const maxRetries = 3;
+    let attempt = 0;
+    let delay = 5000; // Start with a 5-second delay
 
-        if (submission.contentType === 'text') {
-            apiUrl = GEMINI_API_URL;
-            requestBody = {
-                contents: [{
-                    parts: [{
-                        text: `Analyze the following text and provide a concise emotional summary as a comma-separated list of 5-10 keywords (e.g., hopeful, melancholic, serene, chaotic, joyful): "${submission.content}"`
+    while (attempt < maxRetries) {
+        try {
+            let requestBody;
+            let apiUrl;
+
+            if (submission.contentType === 'text') {
+                apiUrl = GEMINI_API_URL;
+                requestBody = {
+                    contents: [{
+                        parts: [{
+                            text: `Analyze the following text and provide a concise emotional summary as a comma-separated list of 5-10 keywords (e.g., hopeful, melancholic, serene, chaotic, joyful): "${submission.content}"`
+                        }]
                     }]
-                }]
-            };
-        } else if (submission.contentType === 'image') {
-            apiUrl = GEMINI_VISION_API_URL;
-            const imageBytes = fs.readFileSync(submission.content).toString('base64');
-            requestBody = {
-                contents: [{
-                    parts: [
-                        { text: "Analyze the following image and provide a concise emotional summary as a comma-separated list of 5-10 keywords (e.g., hopeful, melancholic, serene, chaotic, joyful)." },
-                        { inline_data: { mime_type: "image/jpeg", data: imageBytes } }
-                    ]
-                }]
-            };
-        } else {
-            // Placeholder for audio - Gemini API for audio is more complex
-            // For now, we'll return a generic vector
-            console.log('Audio analysis not yet implemented, returning generic vector.');
-            return ['neutral'];
+                };
+            } else if (submission.contentType === 'image') {
+                apiUrl = GEMINI_VISION_API_URL;
+                const imageBytes = fs.readFileSync(submission.content).toString('base64');
+                requestBody = {
+                    contents: [{
+                        parts: [
+                            { text: "Analyze the following image and provide a concise emotional summary as a comma-separated list of 5-10 keywords (e.g., hopeful, melancholic, serene, chaotic, joyful)." },
+                            { inline_data: { mime_type: "image/jpeg", data: imageBytes } }
+                        ]
+                    }]
+                };
+            } else {
+                console.log('Audio analysis not yet implemented, returning generic vector.');
+                return ['neutral'];
+            }
+
+            const response = await axios.post(apiUrl, requestBody);
+            const summary = response.data.candidates[0].content.parts[0].text;
+            return summary.split(',').map(kw => kw.trim().toLowerCase());
+
+        } catch (error) {
+            const errorMessage = error.response ? (error.response.data.error ? error.response.data.error.message : error.response.data) : error.message;
+            console.error(`Error on attempt ${attempt + 1}:`, errorMessage);
+
+            if (errorMessage.includes('overloaded') && attempt < maxRetries - 1) {
+                console.log(`Model overloaded. Retrying in ${delay / 1000} seconds...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 3; // Increase delay for next retry (5s, 15s)
+                attempt++;
+            } else {
+                // If it's not an overload error or we've run out of retries, return the error.
+                if (errorMessage.includes('overloaded')) {
+                    return ['overloaded'];
+                }
+                return ['error', errorMessage];
+            }
         }
-
-        const response = await axios.post(apiUrl, requestBody);
-        const summary = response.data.candidates[0].content.parts[0].text;
-        return summary.split(',').map(kw => kw.trim().toLowerCase());
-
-    } catch (error) {
-        const errorMessage = error.response ? error.response.data.error.message : error.message;
-        console.error('Error calling Gemini API:', errorMessage);
-        // Return a descriptive error vector to aid in debugging
-        return ['error', errorMessage];
     }
 }
 
