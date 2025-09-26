@@ -158,11 +158,15 @@ function App() {
     return (
         <ErrorBoundary>
             <div className="App">
-                <DarkModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-                {cooldownTime > 0 && (
-                    <div className="cooldown-timer-wrapper">
-                        <CooldownTimer initialTime={cooldownTime} />
+                {cooldownTime > 0 ? (
+                    <div className="top-bar">
+                        <div className="cooldown-timer-wrapper">
+                            <CooldownTimer initialTime={cooldownTime} />
+                        </div>
+                        <DarkModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
                     </div>
+                ) : (
+                    <DarkModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
                 )}
                 <div className="content-frame">
                     {mainContent}
