@@ -4,6 +4,7 @@ import SubmissionForm from './components/SubmissionForm';
 import MatchedContent from './components/MatchedContent';
 import CooldownTimer from './components/CooldownTimer';
 import ErrorBoundary from './components/ErrorBoundary';
+import DarkModeToggle from './components/DarkModeToggle';
 
 const API_URL = `http://${window.location.hostname}:5000`;
 
@@ -13,6 +14,23 @@ function App() {
     const [waiting, setWaiting] = useState(false);
     const [submissionId, setSubmissionId] = useState(null);
     const [cooldownTime, setCooldownTime] = useState(null);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const savedMode = localStorage.getItem('sensus_dark_mode');
+        return savedMode ? JSON.parse(savedMode) : false;
+    });
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        localStorage.setItem('sensus_dark_mode', JSON.stringify(isDarkMode));
+    }, [isDarkMode]);
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(prevMode => !prevMode);
+    };
 
     useEffect(() => {
         const lastSubmissionTime = localStorage.getItem('sensus_last_submission');
@@ -140,6 +158,7 @@ function App() {
     return (
         <ErrorBoundary>
             <div className="App">
+                <DarkModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
                 {cooldownTime > 0 && (
                     <div className="cooldown-timer-wrapper">
                         <CooldownTimer initialTime={cooldownTime} />
