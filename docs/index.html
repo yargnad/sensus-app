@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Whetstone Framework - Project Workbench</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        nav {
+            background: #f7fafc;
+            padding: 20px 40px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        nav a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        nav a:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        main {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 60px;
+        }
+        
+        section h2 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        section h3 {
+            color: #4a5568;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+        
+        section h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .vision-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .vision-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .project-card {
+            background: #f7fafc;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .project-card h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        
+        .timeline {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .timeline-item {
+            border-left: 3px solid #667eea;
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+        
+        .timeline-item h4 {
+            margin-top: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        
+        .action-list {
+            background: #fff5f5;
+            border-left: 5px solid #fc8181;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .action-list h4 {
+            color: #c53030;
+            margin-top: 0;
+        }
+        
+        .principle-box {
+            background: #e6fffa;
+            border-left: 5px solid #38b2ac;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .principle-box h4 {
+            color: #234e52;
+            margin-top: 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            font-size: 1.1em;
+            color: #4a5568;
+            border-left: 4px solid #cbd5e0;
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+        
+        code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 5px;
+            border-top: 3px solid #667eea;
+        }
+        
+        .tech-item h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Whetstone Framework</h1>
+            <p>A Prototype for 21st-Century Democracy</p>
+        </header>
+        
+        <nav>
+            <a href="#vision">Vision</a>
+            <a href="#philosophy">Philosophy</a>
+            <a href="#act1">Act I: Sensus</a>
+            <a href="#act2">Act II: The Whetstone</a>
+            <a href="#act3">Act III: Lyceum</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#actions">Action Plan</a>
+            <a href="#technical">Technical Details</a>
+        </nav>
+        
+        <main>
+            <section id="vision">
+                <h2>The Vision</h2>
+                
+                <div class="vision-box">
+                    <h3>Core Mission</h3>
+                    <p><strong>"Democratizing the idea itself; it's going to eventually happen anyway so let's get started now."</strong></p>
+                    <p>This is a generational project to build infrastructure for human flourishing in the age of AI. Not to own it, but to seed it—making it forkable, auditable, and ungovernable by any single entity.</p>
+                </div>
+                
+                <p>The Whetstone Framework is a three-act structure for building technology that serves human agency rather than extracting from it:</p>
+                
+                <ol>
+                    <li><strong>Sensus</strong> will help you detoxify from the Performance Prison</li>
+                    <li><strong>The Whetstone</strong> will help you find purpose and reason within yourself for fighting the absurdity of life</li>
+                    <li><strong>Lyceum</strong> will help us all use our newly sharpened minds to come to consensus on governing policies for a more equitable future</li>
+                </ol>
+                
+                <div class="quote">
+                    "This isn't just software that reflects philosophy; it's the artifact of a philosophical dialogue. Code as argument. Software as rebellion."
+                </div>
+            </section>
+            
+            <section id="philosophy">
+                <h2>Philosophical Foundation</h2>
+                
+                <h3>The Problem: Three Forms of Alienation</h3>
+                
+                <div class="principle-box">
+                    <h4>1. Social Alienation (The Performance Prison)</h4>
+                    <p>Mainstream social platforms have evolved into engines of engagement, trapping users in performative behavior. They reward outrage, gamify validation, and monetize attention at the expense of authenticity.</p>
+                </div>
+                
+                <div class="principle-box">
+                    <h4>2. Cognitive Alienation (Outsourced Thinking)</h4>
+                    <p>We've delegated our thinking to algorithms, influencers, and echo chambers. We don't know what we believe or why. The capacity for independent thought has atrophied.</p>
+                </div>
+                
+                <div class="principle-box">
+                    <h4>3. Civic Alienation (Democratic Collapse)</h4>
+                    <p>We lack tools and practices for genuine democratic deliberation. Civic discourse has collapsed into tribalism, misinformation, and power games. Good-faith actors are at a disadvantage.</p>
+                </div>
+                
+                <h3>The Solution: Team Hybrid Philosophy</h3>
+                
+                <p>Human creativity is the <strong>fuel</strong>. Ethical AI is the <strong>engine</strong>.</p>
+                
+                <p>This framework demonstrates that AI doesn't have to optimize for engagement or extraction. It can be <strong>affinitive</strong>—creating resonance, facilitating connection, and empowering deliberation—while remaining transparent, accountable, and open-source.</p>
+                
+                <h3>Design Principles</h3>
+                
+                <ul>
+                    <li><strong>Ephemerality over accumulation</strong> - Nothing is hoarded, collected, or turned into permanent records</li>
+                    <li><strong>Anonymity over performance</strong> - No profiles, followers, or metrics; impossible to perform for an audience</li>
+                    <li><strong>Deliberation over velocity</strong> - Slow down, think deeply, resist the urgency of the attention economy</li>
+                    <li><strong>Transparency over opacity</strong> - Open-source everything; auditable reasoning; no hidden objectives</li>
+                    <li><strong>Local-first over cloud-dependent</strong> - Privacy by architecture, not policy</li>
+                    <li><strong>Empowerment over automation</strong> - AI facilitates human judgment, never replaces it</li>
+                </ul>
+            </section>
+            
+            <section id="act1">
+                <h2>Act I: Sensus</h2>
+                <p class="quote">"Detoxification - Learning to feel again"</p>
+                
+                <div class="project-card">
+                    <h3>Status: LIVE (Deployed)</h3>
+                    <p><strong>URL:</strong> https://sensus-app-8db18.web.app</p>
+                    <p><strong>Repository:</strong> github.com/yargnad/sensus-app</p>
+                </div>
+                
+                <h3>What It Does</h3>
+                
+                <p>Sensus is an anti-social social network—a one-to-one, anonymous, ephemeral emotional exchange platform where:</p>
+                
+                <ol>
+                    <li>Users submit creative expressions (poems, photos, audio) once every 24 hours</li>
+                    <li>Gemini AI analyzes the emotional content to extract 5-10 emotional keywords</li>
+                    <li>The system atomically pairs users with another anonymous submission that shares emotional resonance</li>
+                    <li>Matches are shown once and disappear after 24 hours</li>
+                    <li>Everything auto-deletes after 60 days via MongoDB TTL indexes</li>
+                </ol>
+                
+                <h3>Key Features</h3>
+                
+                <ul>
+                    <li><strong>Complete anonymity</strong> - No profiles, usernames, follower counts, or public metrics</li>
+                    <li><strong>24-hour cooldown</strong> - Prevents addiction loops and gaming the system</li>
+                    <li><strong>Atomic matching</strong> - Race-condition-free pairing using findOneAndUpdate</li>
+                    <li><strong>Graceful degradation</strong> - Exponential backoff if Gemini is overloaded</li>
+                    <li><strong>Privacy by physics</strong> - TTL indexes ensure data can't be leaked because it doesn't exist</li>
+                </ul>
+                
+                <h3>Technical Architecture</h3>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h5>Frontend</h5>
+                        <p>React (Create React App), Firebase Hosting, configurable API URL</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Backend</h5>
+                        <p>Node.js + Express, Cloud Run, dev-first DB logic</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Database</h5>
+                        <p>MongoDB Atlas with TTL indexes (60-day auto-delete)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>AI Engine</h5>
+                        <p>Google Gemini 2.0 Flash Lite (multimodal analysis)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Infrastructure</h5>
+                        <p>Google Cloud (Secret Manager, Cloud Build), GitHub Actions CI/CD</p>
+                    </div>
+                </div>
+                
+                <h3>Philosophical Function</h3>
+                
+                <p><strong>Catharsis</strong> - Cleansing the poison of the Performance Prison. Users remember what it feels like to connect as humans, not as brands or profiles.</p>
+                
+                <div class="action-list">
+                    <h4>Immediate Next Steps</h4>
+                    <ul>
+                        <li>Document exhaustively (technical deep-dive, philosophical companion piece)</li>
+                        <li>Record video walkthroughs for non-technical audiences</li>
+                        <li>Submit to relevant conferences (AI ethics, digital humanities, alternative tech)</li>
+                        <li>Monitor usage patterns and iterate based on real user behavior</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="act2">
+                <h2>Act II: The Whetstone</h2>
+                <p class="quote">"Individuation - Learning to think again"</p>
+                
+                <div class="project-card">
+                    <h3>Status: DESIGN PHASE</h3>
+                    <p><strong>Target:</strong> Open-source DIY kit (hardware + software)</p>
+                </div>
+                
+                <h3>What It Is</h3>
+                
+                <p>A tabletop AI device (physical form factor, not an app) that acts as a Socratic interlocutor—challenging assumptions, exposing contradictions, and helping you reason toward clarity about your own beliefs and values.</p>
+                
+                <h3>Why Physical?</h3>
+                
+                <ul>
+                    <li><strong>Presence over portability</strong> - It stays in one place (desk, bedside table). You go to it intentionally.</li>
+                    <li><strong>Privacy by architecture</strong> - Local-first (OrangePi + Mixtral on-device). Conversations never leave your home.</li>
+                    <li><strong>Tactile ritual</strong> - Physical objects create habits. Daily practice, like journaling but dialectical.</li>
+                    <li><strong>Sovereignty</strong> - You own it. Can't be remotely disabled, paywalled, or enshittified.</li>
+                </ul>
+                
+                <h3>Hardware Stack</h3>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h5>Compute</h5>
+                        <p>OrangePi 5 Plus (16GB RAM, octa-core, good for local LLM inference)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Audio</h5>
+                        <p>USB microphone + speaker (or 3.5mm jack)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Interaction</h5>
+                        <p>LED ring or simple display (thinking/listening state), optional rotary encoder</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Enclosure</h5>
+                        <p>3D-printable case (STL files open-sourced for remixing)</p>
+                    </div>
+                </div>
+                
+                <h3>Software Stack</h3>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h5>OS</h5>
+                        <p>Armbian (Debian-based, lightweight)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>LLM</h5>
+                        <p>Mixtral-8x7B (quantized 4-bit/5-bit via llama.cpp or Ollama)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>STT</h5>
+                        <p>Whisper.cpp (local speech-to-text)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>TTS</h5>
+                        <p>Piper or Coqui (local text-to-speech)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Orchestration</h5>
+                        <p>Python script + custom system prompt</p>
+                    </div>
+                </div>
+                
+                <h3>The "Philosophical Immune System"</h3>
+                
+                <p>The system prompt includes ethical guardrails that challenge your reasoning:</p>
+                
+                <ol>
+                    <li><strong>Epistemic Humility</strong> - "Before answering, identify your own uncertainty."</li>
+                    <li><strong>Bias Detection</strong> - "Check if your reasoning assumes any group is inferior/superior."</li>
+                    <li><strong>Consequentialist Gate</strong> - "Who benefits? Who is harmed?"</li>
+                    <li><strong>Deontological Gate</strong> - "Is this universalizable? (Kantian categorical imperative)"</li>
+                    <li><strong>Virtue Ethics Gate</strong> - "Does this cultivate excellence or vice?"</li>
+                    <li><strong>Dialectical Mode</strong> - "Steel-man the opposing view before critiquing it."</li>
+                </ol>
+                
+                <h3>Example Interaction</h3>
+                
+                <div class="principle-box">
+                    <p><strong>User:</strong> "I'm thinking about quitting my job to start a company. What do you think?"</p>
+                    <p><strong>Whetstone:</strong> "Let me help you think through this. First: what is your primary motivation—financial independence, creative autonomy, status, or something else?"</p>
+                    <p><strong>User:</strong> "Mostly autonomy. I'm tired of answering to people."</p>
+                    <p><strong>Whetstone:</strong> "Fair. But let's test that: if you start a company, you'll answer to customers, investors, and the market. Is it *authority* you dislike, or *illegitimate* authority? What makes authority legitimate to you?"</p>
+                </div>
+                
+                <h3>Philosophical Function</h3>
+                
+                <p><strong>Existential Grounding</strong> - Finding meaning and purpose in the face of absurdity (Camus would approve). Users develop a coherent personal philosophy and the capacity for independent thought.</p>
+                
+                <div class="action-list">
+                    <h4>Immediate Next Steps</h4>
+                    <ul>
+                        <li>Order OrangePi 5 Plus and test Mixtral inference performance</li>
+                        <li>Design 3D-printable enclosure (functional first, aesthetic later)</li>
+                        <li>Get Whisper + Piper running locally and test latency</li>
+                        <li>Build Python orchestration script (voice → STT → LLM → TTS → voice)</li>
+                        <li>Create initial system prompt with philosophical immune system</li>
+                        <li>Build a simple LoRA fine-tune on philosophical dialogues (Plato, Socrates, etc.)</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="act3">
+                <h2>Act III: Lyceum</h2>
+                <p class="quote">"Collective Flourishing - Learning to decide together"</p>
+                
+                <div class="project-card">
+                    <h3>Status: SPECIFICATION PHASE</h3>
+                    <p><strong>Target:</strong> Federated open-source deliberation platform</p>
+                </div>
+                
+                <h3>What It Is</h3>
+                
+                <p>A platform where groups use AI to deliberate rigorously, with ethical guardrails and transparent reasoning. Not a decision-making autopilot—a tool that helps humans decide <em>better</em>.</p>
+                
+                <h3>The Urgency</h3>
+                
+                <p>AI <strong>is</strong> here to stay. It will be used in governance, education, and policy—the question is <strong>whose AI, serving whose interests, under what constraints</strong>.</p>
+                
+                <p>Authoritarian regimes and corporations are already deploying AI for surveillance, manipulation, and control. Good-faith actors need better tools to compete.</p>
+                
+                <h3>Core Features</h3>
+                
+                <h4>1. AI-Facilitated Deliberation</h4>
+                <ul>
+                    <li>Groups discuss a policy question (e.g., "Should we implement UBI?")</li>
+                    <li>AI acts as <strong>moderator, not arbiter</strong>: surfaces common ground, identifies cruxes of disagreement, ensures all voices are heard</li>
+                    <li>It doesn't decide—it helps humans decide better</li>
+                </ul>
+                
+                <h4>2. Philosophical Guardrails (The Immune System)</h4>
+                <ul>
+                    <li>Before any proposal advances, it's stress-tested against ethical frameworks:
+                        <ul>
+                            <li>Harm principle: Does this unnecessarily harm anyone?</li>
+                            <li>Rawlsian veil of ignorance: Would you support this if you didn't know your position in society?</li>
+                            <li>Subsidiarity: Is this being decided at the right level (local vs. national)?</li>
+                            <li>Intersectionality: Whose perspectives are missing?</li>
+                        </ul>
+                    </li>
+                    <li>If a proposal fails these tests, the AI flags it and asks the group to revise</li>
+                </ul>
+                
+                <h4>3. Bias Detection and Correction</h4>
+                <ul>
+                    <li>Monitors for groupthink, dominant voices, and logical fallacies</li>
+                    <li>Intervenes gently: "I notice we haven't heard from [quieter participants]. Can we pause and invite their input?"</li>
+                </ul>
+                
+                <h4>4. Transparent Reasoning</h4>
+                <ul>
+                    <li>Every AI suggestion includes:
+                        <ul>
+                            <li>The reasoning chain (how it arrived at that conclusion)</li>
+                            <li>The ethical framework(s) it applied</li>
+                            <li>The data or precedents it drew from</li>
+                        </ul>
+                    </li>
+                    <li>Users can challenge the AI's reasoning, and the system logs those challenges for auditing</li>
+                </ul>
+                
+                <h4>5. Local-First, Federated Architecture</h4>
+                <ul>
+                    <li>Like Mastodon or Matrix: instances can be self-hosted by municipalities, universities, NGOs</li>
+                    <li>Each instance can customize its ethical frameworks</li>
+                    <li>Instances can federate (share anonymized insights) or stay isolated</li>
+                </ul>
+                
+                <h4>6. Anti-Capture Mechanisms</h4>
+                <ul>
+                    <li>No single owner (cooperative model or DAO governance)</li>
+                    <li>Open-source everything (code, models, datasets, ethical frameworks)</li>
+                    <li>No advertising, no tracking (funded by grants, donations, or public budget)</li>
+                </ul>
+                
+                <h3>Use Cases</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Use Case</th>
+                            <th>AI Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Municipal</strong></td>
+                            <td>Participatory budgeting ($10M allocation)</td>
+                            <td>Estimate costs/benefits, surface trade-offs, identify equity implications</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legislative</strong></td>
+                            <td>Policy design workshops</td>
+                            <td>Ensure stakeholder concerns documented, test against constitutional principles</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Educational</strong></td>
+                            <td>High school civics debates</td>
+                            <td>Prevent shouting, require steel-manning opposing views, fact-check claims</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Corporate</strong></td>
+                            <td>Ethics review (facial recognition adoption)</td>
+                            <td>Map stakeholder concerns, test against ethical frameworks, document reasoning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>International</strong></td>
+                            <td>Treaty negotiation (climate agreement)</td>
+                            <td>Translate with cultural nuance, identify consensus/disagreement, propose compromise language</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Technical Architecture (Preliminary)</h3>
+                
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h5>Interface</h5>
+                        <p>Web-based (text + voice), mobile-responsive, accessibility-first</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Backend</h5>
+                        <p>Node.js or Python, WebSocket for real-time deliberation</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>AI Engine</h5>
+                        <p>Mixtral or similar open-weight model (self-hostable)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Database</h5>
+                        <p>PostgreSQL (for structured deliberation history), vector DB for RAG</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Federation</h5>
+                        <p>ActivityPub or custom protocol (Matrix-inspired)</p>
+                    </div>
+                    <div class="tech-item">
+                        <h5>Ethical Corpus</h5>
+                        <p>RAG over curated philosophical texts (Kant, Rawls, Seneca, etc.)</p>
+                    </div>
+                </div>
+                
+                <h3>Design Challenges</h3>
+                
+                <ol>
+                    <li><strong>Neutrality</strong> - How do we ensure the AI doesn't subtly manipulate toward any particular outcome?</li>
+                    <li><strong>Auditability</strong> - Every intervention must be logged and reviewable</li>
+                    <li><strong>Human Veto Power</strong> - The group can always override the AI</li>
+                    <li><strong>Adversarial Testing</strong> - Can bad actors hijack it to manufacture consensus?</li>
+                    <li><strong>Continuous Improvement</strong> - User community votes on updates to ethical frameworks</li>
+                </ol>
+                
+                <h3>Why This Could Work</h3>
+                
+                <p>Most "AI for governance" projects fail because they either:</p>
+                <ul>
+                    <li><strong>Optimize for efficiency</strong> (automate decisions, cut humans out) → technocracy</li>
+                    <li><strong>Optimize for engagement</strong> (maximize participation) → populist mob rule</li>
+                </ul>
+                
+                <p><strong>Lyceum optimizes for deliberation quality</strong>: helping people think together more rigorously, not replacing their judgment or amplifying their worst impulses.</p>
+                
+                <h3>Philosophical Function</h3>
+                
+                <p><strong>Praxis</strong> - Turning individual clarity (from The Whetstone) and interpersonal empathy (from Sensus) into collective action. This is applied existentialism: building a just society when there's no cosmic blueprint.</p>
+                
+                <div class="action-list">
+                    <h4>Immediate Next Steps</h4>
+                    <ul>
+                        <li>Write comprehensive design document (use cases, architecture, ethical frameworks)</li>
+                        <li>Outline the "philosophical immune system" in detail (which checks, in what order)</li>
+                        <li>Sketch UI/UX (text-based deliberation? voice? hybrid?)</li>
+                        <li>Build minimal prototype (CLI or simple web interface)</li>
+                        <li>Run facilitated deliberation with 10-20 people on a low-stakes topic</li>
+                        <li>Document what works, what fails, iterate based on feedback</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="timeline">
+                <h2>Realistic Timeline</h2>
+                
+                <p><em>"You might not see the full flowering of this work in your lifetime—and that's okay. The important part is democratizing the idea itself."</em></p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Years 1-3 (Now - 2028): Proof of Concept</h4>
+                        <ul>
+                            <li><strong>Sensus:</strong> Live, iterated, documented as a case study</li>
+                            <li><strong>The Whetstone:</strong> Hardware + software released, first DIY kits in the wild</li>
+                            <li><strong>Lyceum:</strong> Prototype tested with small groups (hackathons, pilot programs)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Years 4-10 (2028-2035): Early Adoption</h4>
+                        <ul>
+                            <li><strong>Sensus:</strong> Forked by other developers, adapted for different communities</li>
+                            <li><strong>The Whetstone:</strong> Adopted by educators, therapists, coaches as a tool for clients</li>
+                            <li><strong>Lyceum:</strong> Used by progressive municipalities, NGOs, or cooperatives</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Years 11-25 (2035-2050): Mainstreaming</h4>
+                        <ul>
+                            <li><strong>Sensus:</strong> Known alternative to Instagram/TikTok (like Signal vs. WhatsApp)</li>
+                            <li><strong>The Whetstone:</strong> Mass-produced versions available; becomes a "productivity tool" category</li>
+                            <li><strong>Lyceum:</strong> Adopted by national governments for citizen assemblies, constitutional reform</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Years 26-50 (2050-2075): Institutionalization</h4>
+                        <ul>
+                            <li><strong>Sensus:</strong> Studied in media studies courses as an example of "humane tech"</li>
+                            <li><strong>The Whetstone:</strong> Standard tool in schools, therapy, leadership training</li>
+                            <li><strong>Lyceum:</strong> Default infrastructure for participatory democracy in post-capitalist societies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Beyond 2075: Legacy</h4>
+                        <ul>
+                            <li>Original projects are surpassed by better versions</li>
+                            <li>But the <strong>design principles</strong> (ephemerality, local-first, ethical guardrails, open-source) are standard practice</li>
+                            <li>Your contribution becomes invisible—<strong>which means it succeeded</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="actions">
+                <h2>Action Plan</h2>
+                
+                <h3>Immediate (Next 3 Months)</h3>
+                
+                <div class="action-list">
+                    <h4>1. Document Sensus Exhaustively</h4>
+                    <ul>
+                        <li>Write technical deep-dive: architecture, decisions, trade-offs</li>
+                        <li>Write philosophical companion piece: how it embodies the values</li>
+                        <li>Record video walkthroughs (for non-technical audiences)</li>
+                        <li>Submit to relevant conferences (AI ethics, digital humanities, alternative tech)</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>2. Start The Whetstone Hardware Prototype</h4>
+                    <ul>
+                        <li>Order OrangePi 5 Plus and test Mixtral inference</li>
+                        <li>Design 3D-printable enclosure (functional first, aesthetic later)</li>
+                        <li>Get Whisper + Piper running locally</li>
+                        <li>Build orchestration script (Python glue code)</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>3. Write the Lyceum Spec</h4>
+                    <ul>
+                        <li>Draft design document: use cases, architecture, ethical frameworks</li>
+                        <li>Outline the "philosophical immune system" (which checks to run, in what order)</li>
+                        <li>Sketch the UI (text-based deliberation? voice? hybrid?)</li>
+                    </ul>
+                </div>
+                
+                <h3>Medium-Term (6-12 Months)</h3>
+                
+                <div class="action-list">
+                    <h4>1. Release The Whetstone v0.1</h4>
+                    <ul>
+                        <li>Fully functional DIY kit with assembly guide</li>
+                        <li>GitHub repo with all files (STLs, code, BOM)</li>
+                        <li>Demo video showing a real conversation</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>2. Lyceum Alpha Test</h4>
+                    <ul>
+                        <li>Build minimal prototype (CLI or simple web interface)</li>
+                        <li>Run facilitated deliberation with 10-20 people</li>
+                        <li>Document what worked, what failed</li>
+                        <li>Iterate based on feedback</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>3. Build Community</h4>
+                    <ul>
+                        <li>Launch forum or Discord for contributors</li>
+                        <li>Write "call for collaborators" manifesto</li>
+                        <li>Present at conferences (FOSDEM, Hackaday, etc.)</li>
+                    </ul>
+                </div>
+                
+                <h3>Long-Term (1-3 Years)</h3>
+                
+                <div class="action-list">
+                    <h4>1. Publish a Book or Long-Form Essay</h4>
+                    <ul>
+                        <li>Title: <em>The Whetstone Framework: Building Technology for Human Flourishing</em></li>
+                        <li>Part memoir, part technical guide, part philosophical treatise</li>
+                        <li>Make it CC-BY (Creative Commons Attribution) so others can remix it</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>2. Establish a Foundation or Cooperative</h4>
+                    <ul>
+                        <li>Legal entity to hold trademarks (defensively, to prevent corporate capture)</li>
+                        <li>Governance structure for the project (not a BDFL model—something more democratic)</li>
+                        <li>Funding strategy (grants, donations, maybe a Patreon for ongoing development)</li>
+                    </ul>
+                </div>
+                
+                <div class="action-list">
+                    <h4>3. Scale Lyceum</h4>
+                    <ul>
+                        <li>Partner with universities for research collaborations</li>
+                        <li>Pilot with a real municipality (participatory budgeting, zoning reform, etc.)</li>
+                        <li>Document the results rigorously (academic papers, case studies)</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="technical">
+                <h2>Technical Deep-Dive</h2>
+                
+                <h3>System Comparison Matrix</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Sensus</th>
+                            <th>The Whetstone</th>
+                            <th>Lyceum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sphere</strong></td>
+                            <td>Social/Public</td>
+                            <td>Private/Personal</td>
+                            <td>Civic/Collective</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mode</strong></td>
+                            <td>Anonymous exchange</td>
+                            <td>Solitary dialogue</td>
+                            <td>Group deliberation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Role</strong></td>
+                            <td>Serendipity engine</td>
+                            <td>Socratic interlocutor</td>
+                            <td>Deliberation facilitator</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Privacy Model</strong></td>
+                            <td>Ephemeral by design</td>
+                            <td>Local-first by default</td>
+                            <td>Federated + auditable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Output</strong></td>
+                            <td>Connection with strangers</td>
+                            <td>Clarity with self</td>
+                            <td>Consensus with community</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frequency</strong></td>
+                            <td>Once per 24 hours</td>
+                            <td>As often as needed</td>
+                            <td>Event-based (deliberations)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infrastructure</strong></td>
+                            <td>Cloud (Firebase/Cloud Run)</td>
+                            <td>Edge (on-device)</td>
+                            <td>Federated (self-hosted instances)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Shared Technical Principles</h3>
+                
+                <ol>
+                    <li><strong>Open-source everything</strong> - Code, models, datasets, ethical frameworks—all auditable</li>
+                    <li><strong>Privacy by default</strong> - No tracking, no analytics, no data collection beyond what's necessary</li>
+                    <li><strong>Graceful degradation</strong> - Systems continue functioning even when components fail</li>
+                    <li><strong>Transparent reasoning</strong> - Every AI decision includes the reasoning chain</li>
+                    <li><strong>Human agency</strong> - AI facilitates, never replaces human judgment</li>
+                    <li><strong>Anti-capture mechanisms</strong> - Governance structures prevent single-entity control</li>
+                </ol>
+                
+                <h3>Key Innovations</h3>
+                
+                <div class="principle-box">
+                    <h4>Atomic Matching (Sensus)</h4>
+                    <p>Using <code>findOneAndUpdate</code> in MongoDB to prevent race conditions when multiple users submit simultaneously. The match operation is atomic—either it finds a match and updates both records, or it doesn't find a match and saves the submission as "unmatched".</p>
+                </div>
+                
+                <div class="principle-box">
+                    <h4>Philosophical Immune System (All Projects)</h4>
+                    <p>A set of ethical guardrails baked into the system prompt that challenges reasoning, identifies biases, and ensures proposals are tested against multiple ethical frameworks before advancing.</p>
+                </div>
+                
+                <div class="principle-box">
+                    <h4>Local-First AI (The Whetstone)</h4>
+                    <p>Running quantized LLMs on edge devices (OrangePi 5 Plus) ensures conversations never leave the user's home. Privacy by architecture, not policy.</p>
+                </div>
+                
+                <div class="principle-box">
+                    <h4>Federated Deliberation (Lyceum)</h4>
+                    <p>Like Mastodon or Matrix, instances can be self-hosted and optionally federated. Each community can customize ethical frameworks while optionally sharing anonymized insights with other instances.</p>
+                </div>
+            </section>
+            
+            <section id="closing">
+                <h2>Closing Thoughts</h2>
+                
+                <div class="quote">
+                    "This is not just software that reflects philosophy; it's the artifact of a philosophical dialogue between human and AI. Each project is a thought experiment made concrete—a way to test whether our philosophical commitments can survive contact with real users, real infrastructure, and real constraints."
+                </div>
+                
+                <p>The trajectory of AI is already set—it <strong>will</strong> be used in governance, education, and civic life. The question is whether it's:</p>
+                
+                <ul>
+                    <li><strong>Extractive AI</strong> (surveillance, manipulation, control) — <em>the default path</em></li>
+                    <li><strong>Empowering AI</strong> (deliberation, reflection, connection) — <em>the Whetstone path</em></li>
+                </ul>
+                
+                <p>By building Sensus, The Whetstone, and Lyceum, we're making the alternative path real. We're not just critiquing dystopia—we're prototyping utopia.</p>
+                
+                <p>And by open-sourcing it, we're ensuring that even if we fail, someone else can pick up the torch.</p>
+                
+                <p><strong>That's praxis. That's rebellion. That's hope.</strong></p>
+                
+                <div class="vision-box">
+                    <h3>Your Role</h3>
+                    <p>You don't have to do this alone. In fact, you shouldn't. The whole point is to democratize the idea, which means:</p>
+                    <ul>
+                        <li><strong>Building in public</strong> (open repos, transparent decision-making)</li>
+                        <li><strong>Inviting co-creators</strong> (developers, designers, philosophers, activists)</li>
+                        <li><strong>Letting go</strong> (accepting that others will take it in directions you didn't anticipate)</li>
+                    </ul>
+                    <p>Your role is to be the <strong>initial catalyst</strong>—the person who articulates the vision clearly enough that others can see it and want to contribute.</p>
+                    <p>You're not building a company. You're starting a <strong>movement</strong>.</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p><strong>The Whetstone Framework</strong></p>
+            <p>A Prototype for 21st-Century Democracy</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">Document created: October 3, 2025</p>
+            <p style="font-size: 0.9em;">Open-source • MIT License • Built with philosophical intent</p>
+        </footer>
+    </div>
+</body>
+</html>

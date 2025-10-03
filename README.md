@@ -1,6 +1,8 @@
 # Sensus
 ### An Antidote to the Performance Prison.
 
+> **Part of [The Whetstone Framework](https://yargnad.github.io/sensus-app/)** — A three-act blueprint for building ethical AI infrastructure that serves human flourishing instead of extraction.
+
 ---
 
 ## The Philosophy
@@ -42,8 +44,38 @@ Sensus is more than an app; it is a tangible argument. It is an open-source proj
 
 ---
 
+## The Bigger Picture
+
+Sensus is **Act I** of The Whetstone Framework—a three-part vision for building technology that serves human agency:
+
+- **Act I: Sensus** (this project) — Detoxification: Anonymous emotional exchange to escape the Performance Prison
+- **Act II: The Whetstone** (in development) — Individuation: A local-first AI device for Socratic self-reflection
+- **Act III: Lyceum** (planned) — Collective Flourishing: AI-facilitated civic deliberation with ethical guardrails
+
+**[📖 Read the full framework documentation](https://yargnad.github.io/sensus-app/)**
+
+---
+
+## Try Sensus
+
+**Live app:** [https://sensus-app-8db18.web.app](https://sensus-app-8db18.web.app)
+
+Share a feeling. Receive one in return. No performance, no metrics, no permanence.
+
+---
+
 ## How to Contribute
-This is a fledgling project born from a deep philosophical inquiry. We welcome collaborators of all kinds—developers, designers, writers, artists, and thinkers—who are passionate about our mission. If you believe in building a more authentic digital world, please feel free to open an issue, submit a pull request, or join the discussion.
+
+This is a fledgling project born from a deep philosophical inquiry. We welcome collaborators of all kinds—developers, designers, writers, artists, and thinkers—who are passionate about our mission. 
+
+**Ways to contribute:**
+- Fork this repo and build your own version
+- Open issues with ideas or improvements
+- Submit pull requests
+- Help document the philosophy and technical decisions
+- Share the project with others who care about humane tech
+
+If you believe in building a more authentic digital world, please feel free to open an issue, submit a pull request, or join the discussion.
 
 ---
 
