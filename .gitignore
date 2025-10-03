@@ -19,6 +19,7 @@ server/.env
 # Consolidation script output
 consolidate.js
 sensus-codebase.txt
+sensus-codebase-alpha.txt
 
 # Uploads folder
 /server/uploads/
