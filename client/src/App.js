@@ -5,8 +5,14 @@ import MatchedContent from './components/MatchedContent';
 import CooldownTimer from './components/CooldownTimer';
 import ErrorBoundary from './components/ErrorBoundary';
 import DarkModeToggle from './components/DarkModeToggle';
+import AdminStatus from './components/AdminStatus';
 
-const API_URL = `http://${window.location.hostname}:5000`;
+// Allow overriding the backend URL at build time with REACT_APP_API_URL.
+// This makes production builds portable and avoids hard-coded project URLs.
+const API_URL = process.env.REACT_APP_API_URL
+    || (process.env.NODE_ENV === 'production'
+        ? 'https://sensus-api-602409653611.us-central1.run.app' // fallback to current deployed Cloud Run URL
+        : 'http://localhost:5000'); // local dev
 
 function App() {
     const [showForm, setShowForm] = useState(false);
@@ -158,6 +164,7 @@ function App() {
     return (
         <ErrorBoundary>
             <div className="App">
+                <AdminStatus apiUrl={API_URL} />
                 {cooldownTime > 0 ? (
                     <div className="top-bar">
                         <div className="cooldown-timer-wrapper">

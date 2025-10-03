@@ -41,8 +41,8 @@ try {
 
 Write-Host "`nStarting Sensus client and server..."
 
-# Start the server in a new window
-Start-Process pwsh -ArgumentList "-Command", "cd d:\Users\yargnad\Documents\Projects\Sensus\server; npm start" -PassThru
+# Start the server in a new window (force NODE_ENV=development so local DB is preferred)
+Start-Process pwsh -ArgumentList "-NoExit", "-Command", "cd d:\Users\yargnad\Documents\Projects\Sensus\server; ./start-dev.ps1" -PassThru
 
 # Start the client in a new window
 Start-Process pwsh -ArgumentList "-Command", "cd d:\Users\yargnad\Documents\Projects\Sensus\client; npm start" -PassThru

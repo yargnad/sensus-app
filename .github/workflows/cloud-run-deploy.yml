@@ -1,0 +1,42 @@
+name: Deploy Backend to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy_backend:
+    name: Deploy backend
+    runs-on: ubuntu-latest
+    env:
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        with:
+          credentials_json: ${{ env.GCP_SA_KEY }}
+
+      - name: Deploy to Cloud Run (build + deploy)
+        uses: google-github-actions/deploy-cloudrun@v2
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        with:
+          # Deploy the source in the server/ folder
+          source: server
+          service: sensus-api
+          region: us-central1
+          # Pass required runtime environment variables from repo secrets
+          env_vars: |
+            MONGODB_URI=${{ env.MONGODB_URI }},GEMINI_API_KEY=${{ env.GEMINI_API_KEY }}

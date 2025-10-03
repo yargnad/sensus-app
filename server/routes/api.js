@@ -5,6 +5,7 @@ const axios = require('axios');
 const fs = require('fs');
 const crypto = require('crypto');
 const Submission = require('../models/Submission');
+const path = require('path');
 
 // Multer config for file uploads
 // ... existing code ...
@@ -84,14 +85,13 @@ async function getEmotionalVector(submission) {
 async function findAndPairMatch(submission) {
     // Atomically find a suitable unmatched submission and update it to prevent race conditions.
     // This operation finds a document and updates it in a single atomic step.
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
 
+    // First try: semantic match based on emotional vector overlap.
     const match = await Submission.findOneAndUpdate(
         {
             // Find criteria
             status: 'unmatched',
             _id: { $ne: submission._id },
-            createdAt: { $gte: fiveMinutesAgo },
             emotionalVector: { $in: submission.emotionalVector }
         },
         {
@@ -104,10 +104,9 @@ async function findAndPairMatch(submission) {
         {
             // Options
             new: true, // Return the document *after* the update has been applied
-            sort: { createdAt: 'desc' } // Find the most recent match
+            sort: { createdAt: 'desc' } // Prefer the most recent semantic match
         }
     );
-
     return match;
 }
 
@@ -228,3 +227,50 @@ router.get('/check/:id', async (req, res) => {
 });
 
 module.exports = router;
+
+// --- Status endpoint: return last non-sensitive startup log entry (NDJSON) ---
+// GET /api/status
+router.get('/status', async (req, res) => {
+    try {
+        const logPath = path.join(__dirname, '..', '.startup.log');
+
+        // Helper to extract host from a Mongo URI if needed
+        function getDbHostFromUri(uri) {
+            if (!uri || typeof uri !== 'string') return 'unknown';
+            try {
+                let s = uri.replace(/^[^:]+:\/\//, '');
+                if (s.includes('@')) s = s.split('@').pop();
+                s = s.split('/')[0];
+                return s;
+            } catch (err) {
+                return 'unknown';
+            }
+        }
+
+        if (fs.existsSync(logPath)) {
+            const raw = fs.readFileSync(logPath, 'utf8').trim();
+            if (!raw) return res.json({ status: 'no-entries' });
+            const lines = raw.split(/\r?\n/).filter(Boolean);
+            const last = lines[lines.length - 1];
+            try {
+                const parsed = JSON.parse(last);
+                return res.json({ status: 'ok', startup: parsed });
+            } catch (err) {
+                // If the last line isn't valid JSON for some reason, return it raw
+                return res.json({ status: 'ok', startupRaw: last });
+            }
+        } else {
+            // Fallback summary when the log file doesn't exist yet
+            const fallback = {
+                timestamp: new Date().toISOString(),
+                host: process.env.MONGODB_URI ? getDbHostFromUri(process.env.MONGODB_URI) : 'localhost',
+                port: process.env.PORT || 5000,
+                geminiKeyPresent: !!process.env.GEMINI_API_KEY
+            };
+            return res.json({ status: 'no-log', startup: fallback });
+        }
+    } catch (err) {
+        console.error('Error in /api/status:', err);
+        res.status(500).json({ status: 'error', message: err.message });
+    }
+});

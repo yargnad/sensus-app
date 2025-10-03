@@ -1,0 +1,1 @@
+ERROR: (gcloud.secrets.describe) NOT_FOUND: Secret [projects/602409653611/secrets/MONGODB_URI] not found. This command is authenticated as yargnad@gmail.com which is the active account specified by the [core/account] property.
