@@ -20,6 +20,7 @@ server/.env
 consolidate.js
 sensus-codebase.txt
 sensus-codebase-alpha.txt
+WHETSTONE_FRAMEWORK_WORKBENCH.html
 
 # Uploads folder
 /server/uploads/
