@@ -22,5 +22,8 @@ sensus-codebase.txt
 sensus-codebase-alpha.txt
 WHETSTONE_FRAMEWORK_WORKBENCH.html
 
+# Log files
+*.log
+
 # Uploads folder
 /server/uploads/
