@@ -58,7 +58,7 @@ Sensus is **Act I** of The Whetstone Framework—a three-part vision for buildin
 
 ## Try Sensus
 
-**Live app:** [https://sensus-app-8db18.web.app](https://sensus-app-8db18.web.app)
+**Live app:** [https://sensus.yargnad.com](https://sensus.yargnad.com)
 
 Share a feeling. Receive one in return. No performance, no metrics, no permanence.
 

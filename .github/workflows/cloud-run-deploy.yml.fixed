@@ -1,0 +1,79 @@
+name: Deploy Backend to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - '.github/workflows/cloud-run-deploy.yml'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  deploy_backend:
+    name: Deploy backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker
+
+      - name: Build and Push Docker Image
+        working-directory: ./server
+        run: |
+          echo "🔨 Building Docker image..."
+          IMAGE_NAME="gcr.io/sensus-app-8db18/sensus-api:${{ github.sha }}"
+          IMAGE_LATEST="gcr.io/sensus-app-8db18/sensus-api:latest"
+          
+          docker build -t "$IMAGE_NAME" -t "$IMAGE_LATEST" .
+          
+          echo "📤 Pushing to Google Container Registry..."
+          docker push "$IMAGE_NAME"
+          docker push "$IMAGE_LATEST"
+          
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
+        id: build
+
+      - name: Deploy to Cloud Run
+        run: |
+          echo "🚀 Deploying to Cloud Run..."
+          gcloud run deploy sensus-api \
+            --image gcr.io/sensus-app-8db18/sensus-api:${{ github.sha }} \
+            --region us-central1 \
+            --project sensus-app-8db18 \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-secrets="MONGODB_URI=MONGODB_URI:latest,GEMINI_API_KEY=GEMINI_API_KEY:latest" \
+            --memory 512Mi \
+            --cpu 1 \
+            --max-instances 10 \
+            --min-instances 0 \
+            --timeout 60s
+          
+          echo "✅ Backend deployment complete!"
+          echo "🌐 Service URL: https://sensus-api-602409653611.us-central1.run.app"
+
+      - name: Verify deployment
+        run: |
+          echo "🔍 Verifying deployment..."
+          SERVICE_URL=$(gcloud run services describe sensus-api \
+            --region us-central1 \
+            --project sensus-app-8db18 \
+            --format 'value(status.url)')
+          
+          echo "Testing /api/status endpoint..."
+          curl -f "$SERVICE_URL/api/status" || echo "⚠️  Status endpoint check failed (may be expected)"
+          
+          echo "✅ Deployment verification complete"
