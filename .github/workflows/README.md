@@ -2,6 +2,8 @@
 
 This directory contains CI/CD workflows for automated deployment.
 
+**⚠️ Workflows are currently disabled** (`.disabled` extension). To enable them, rename the files back to `.yml` and configure the required secrets below.
+
 ## Required Repository Secrets
 
 To enable these workflows, you need to configure the following secrets in your GitHub repository settings (`Settings > Secrets and variables > Actions`):
