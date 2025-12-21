@@ -77,6 +77,17 @@ server/gcloud_build_output*
 server/gcloud_run_deploy_*
 server/cloudrun_*.log
 
+# Local server artifacts
+server/node_modules/
+server/*_output*.txt
+server/node_start_output_serverdir.txt
+server/npm_install_output_full.txt
+server/npm_run_output.txt
+server/*.log
+server/service_url*
+server/smoke_*.txt
+server/uploads/
+
 # Book manuscript (not ready for public release)
 The Authentic Rebellion - Second Master Draft.md
 The Authentic Rebellion - Second Master Draft.pdf
