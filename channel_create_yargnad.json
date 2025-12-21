@@ -1,0 +1,17 @@
+{
+  "type": "email",
+  "displayName": "Gemini Alerts - yargnad",
+  "labels": {
+    "email_address": "yargnad@gmail.com"
+  },
+  "name": "projects/sensus-app-8db18/notificationChannels/1979808197557452155",
+  "enabled": true,
+  "creationRecord": {
+    "mutateTime": "2025-11-18T01:35:52.579067257Z"
+  },
+  "mutationRecords": [
+    {
+      "mutateTime": "2025-11-18T01:35:52.579067257Z"
+    }
+  ]
+}

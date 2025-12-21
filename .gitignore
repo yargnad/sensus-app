@@ -88,6 +88,15 @@ server/service_url*
 server/smoke_*.txt
 server/uploads/
 
+# Top-level debug/output artifacts — keep out of repo
+*.txt
+*.log
+metric_debug.json
+node_start_output.txt
+server_start_output.txt
+gcloud_*.txt
+iam_policy.json
+
 # Book manuscript (not ready for public release)
 The Authentic Rebellion - Second Master Draft.md
 The Authentic Rebellion - Second Master Draft.pdf

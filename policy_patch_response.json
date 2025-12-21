@@ -1,0 +1,36 @@
+{
+  "name": "projects/sensus-app-8db18/alertPolicies/5258680067042717397",
+  "displayName": "Alert: High Gemini calls",
+  "combiner": "OR",
+  "creationRecord": {
+    "mutateTime": "2025-11-18T01:33:33.903725631Z",
+    "mutatedBy": "yargnad@gmail.com"
+  },
+  "mutationRecord": {
+    "mutateTime": "2025-11-18T01:35:54.476686119Z",
+    "mutatedBy": "yargnad@gmail.com"
+  },
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"logging.googleapis.com/user/sensus_gemini_calls\"",
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 200,
+        "duration": "86400s",
+        "aggregations": [
+          {
+            "alignmentPeriod": "86400s",
+            "perSeriesAligner": "ALIGN_DELTA"
+          }
+        ]
+      },
+      "displayName": "Gemini calls > 200 per day (delta)",
+      "name": "projects/sensus-app-8db18/alertPolicies/5258680067042717397/conditions/5258680067042713792"
+    }
+  ],
+  "notificationChannels": [
+    "projects/sensus-app-8db18/notificationChannels/1979808197557452155",
+    "projects/sensus-app-8db18/notificationChannels/8073782056748536902"
+  ],
+  "enabled": true
+}

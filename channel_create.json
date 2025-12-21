@@ -1,0 +1,17 @@
+{
+  "type": "email",
+  "displayName": "Gemini Alerts - theman",
+  "labels": {
+    "email_address": "theman@yargnad.com"
+  },
+  "name": "projects/sensus-app-8db18/notificationChannels/8073782056748536902",
+  "enabled": true,
+  "creationRecord": {
+    "mutateTime": "2025-11-18T01:33:03.243119863Z"
+  },
+  "mutationRecords": [
+    {
+      "mutateTime": "2025-11-18T01:33:03.243119863Z"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "displayName": "Alert: High Gemini calls",
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "Gemini calls > 200 per day (delta)",
+      "conditionThreshold": {
+        "filter": "resource.type=\"global\" AND metric.type=\"logging.googleapis.com/user/sensus_gemini_calls\"",
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 200,
+        "duration": "86400s",
+        "aggregations": [
+          {
+            "alignmentPeriod": "86400s",
+            "perSeriesAligner": "ALIGN_DELTA"
+          }
+        ]
+      }
+    }
+  ],
+  "notificationChannels": ["projects/sensus-app-8db18/notificationChannels/8073782056748536902"],
+  "enabled": true
+}

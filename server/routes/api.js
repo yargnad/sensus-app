@@ -76,7 +76,10 @@ const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GE
 const GEMINI_VISION_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_VISION_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
 async function getEmotionalVector(submission) {
-    const maxRetries = 0; // disable automatic retries to avoid multiplied calls
+    // Ensure we attempt the Gemini call at least once.
+    // Setting this to 0 effectively disables any attempt (loop never runs),
+    // which was preventing API calls — use 1 to try once and avoid retries.
+    const maxRetries = 1; // try once, no automatic retries
     let attempt = 0;
     let delay = 5000; // Start with a 5-second delay
 
@@ -380,8 +383,6 @@ router.get('/check/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
-
 // --- Status endpoint: return last non-sensitive startup log entry (NDJSON) ---
 // GET /api/status
 router.get('/status', async (req, res) => {
@@ -428,3 +429,5 @@ router.get('/status', async (req, res) => {
         res.status(500).json({ status: 'error', message: err.message });
     }
 });
+
+module.exports = router;
