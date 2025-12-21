@@ -63,6 +63,20 @@ sensus-codebase-alpha.txt
 # Uploads folder
 /server/uploads/
 
+# Local development artifacts and cloud deploy outputs
+server/data/
+server/*.txt
+server/gcloud_*
+server/cloudrun_*
+server/node_start_output*
+server/npm_*_output*
+server/*_output.txt
+server/service_url*
+server/smoke_*
+server/gcloud_build_output*
+server/gcloud_run_deploy_*
+server/cloudrun_*.log
+
 # Book manuscript (not ready for public release)
 The Authentic Rebellion - Second Master Draft.md
 The Authentic Rebellion - Second Master Draft.pdf
